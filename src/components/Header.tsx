@@ -1,8 +1,11 @@
 interface Header {
   onClick: () => void;
+  onViewCLicked : () => void
+  viewClicked : boolean
 }
 
-function Header({ onClick }: Header) {
+
+function Header({ onClick,onViewCLicked,viewClicked }: Header) {
   return (
     <div className="shadow-xl h-28 w-full">
       <div className="flex flex-row justify-between px-10">
@@ -19,8 +22,11 @@ function Header({ onClick }: Header) {
             </button>
           </div>
           <div className="font-semibold text-1xl flex flex-col justify-center">
-            <button className="btn btn-primary border-2 p-2 bg-blue-400 rounded-md">
-              View Notes
+            <button
+              className="btn btn-primary border-2 p-2 bg-blue-400 rounded-md"
+              onClick={onViewCLicked}
+            >
+              {viewClicked ? "Hide Notes" : "View Notes"}
             </button>
           </div>
         </div>

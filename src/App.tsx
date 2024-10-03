@@ -1,13 +1,18 @@
 import Header from "./components/Header";
 import ViewPort from "./components/ViewPort";
+import Notelist from "./components/NoteList";
 
 //interface types
 import { Notes } from "./types";
 
 //events
 import Form from "./events/Form";
+
+{/* css */}
 import "./App.css";
 import { useState } from "react";
+
+
 
 function App() {
   {
@@ -32,15 +37,25 @@ function App() {
   const addNote = (title: string, content: string) => {
     console.log(note);
     const newNote = {
+      id: note.length+1,
       title,
       content,
     };
     setNewNote([...note, newNote]);
   };
 
+  const [isViewClicked,setViewClicked] = useState(false)
+  const onViewClicked = () =>{
+    setViewClicked(!isViewClicked)
+  }
+
+  const deleteNote = (id:number) =>{
+    setNewNote(note.filter(note=>note.id !== id))
+  }
+
   return (
-    <>
-      <Header onClick={onSubmitClick} />
+    <div className="font-poppins">
+      <Header onClick={onSubmitClick} onViewCLicked={onViewClicked} viewClicked={isViewClicked} />
       {showForm && (
         <Form
           onFormSubmit={(title, content) => addNote(title, content)}
@@ -48,7 +63,8 @@ function App() {
         />
       )}
       <ViewPort />
-    </>
+      {isViewClicked && <Notelist notes={note} deleteNote={deleteNote}/>}
+    </div>
   );
 }
 
